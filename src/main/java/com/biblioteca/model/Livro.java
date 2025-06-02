@@ -2,7 +2,7 @@ package com.biblioteca.model;
 
 public class Livro {
 
-    //Classe responsável por gerenciar os atributos dos livros
+    //Classe responsável por gerenciar os atributos dos livros!
 
     //Atributos da classe
     private int id;
