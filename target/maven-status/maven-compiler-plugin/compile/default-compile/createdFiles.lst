@@ -1,0 +1,7 @@
+com/biblioteca/model/Professor.class
+com/biblioteca/model/Livro.class
+com/biblioteca/enums/Turno.class
+com/biblioteca/model/Usuario.class
+com/biblioteca/model/Aluno.class
+com/biblioteca/enums/TipoUsuario.class
+com/biblioteca/model/Emprestimo.class
