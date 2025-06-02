@@ -1,6 +1,10 @@
 package com.biblioteca.model;
 
 public class Livro {
+  
+    //Classe responsável por gerenciar os atributos dos livros!
+
+    //Atributos da classe
     private int id;
     private String titulo;
     private String autor;
@@ -9,6 +13,7 @@ public class Livro {
     private String isbn;
     private boolean status;
 
+    //Método construtor
     public Livro (int id, String titulo, String autor, int anoPublicacao, String editora, String isbn, boolean status) {
         this.id = id;
         this.titulo = titulo;
@@ -19,6 +24,7 @@ public class Livro {
         this.status = status;
     }
 
+    //Métodos getters e setters
     public int getId() {
         return id;
     }
