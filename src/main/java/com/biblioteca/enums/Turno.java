@@ -1,4 +1,4 @@
-package main.java.com.biblioteca.enums;
+package com.biblioteca.enums;
 
 public enum Turno {
     MATUTINO,

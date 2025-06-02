@@ -1,4 +1,4 @@
-package main.java.com.biblioteca.model;
+package com.biblioteca.model;
 
 public class Emprestimo {
 
