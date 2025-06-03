@@ -6,10 +6,13 @@ import java.sql.SQLException;
 
 public class ConexaoJDBC {
 
+    //Informações para o caminho, usuário e senha para rastramento de conexão
     private static final String URL = "jdbc:h2:~/test";  // Banco H2 local (arquivo "test" na sua home)
     private static final String USUARIO = "sa";          // Usuário padrão do H2
     private static final String SENHA = "";              // Senha padrão do H2 é vazia
 
+
+    //Método para inicilizar a conexão com o banco
     public static Connection getConnection() throws SQLException {
         try {
             return DriverManager.getConnection(URL, USUARIO, SENHA);
@@ -19,6 +22,8 @@ public class ConexaoJDBC {
             return null;
         }
     }
+
+    //Método para fechar a conexão com o banco
     public static void closeConnection(Connection connection) {
         if (connection != null) {
             try {
