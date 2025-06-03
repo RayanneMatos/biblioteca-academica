@@ -11,6 +11,22 @@ public class ConexaoJDBC {
     private static final String SENHA = "";              // Senha padrão do H2 é vazia
 
     public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USUARIO, SENHA);
+        try {
+            return DriverManager.getConnection(URL, USUARIO, SENHA);
+        } catch (Exception e) {
+            System.out.println("Ocorreu um erro a conectar ao banco.");
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public static void closeConnection(Connection connection) {
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                System.out.println("Erro ao fechar conexão");
+                e.printStackTrace();
+            }
+        }
     }
 }
