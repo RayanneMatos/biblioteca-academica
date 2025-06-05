@@ -6,3 +6,5 @@ bin\
 .vscode\ 
 *.log 
 *.log 
+
+src/main/java/com/biblioteca/database/DatabaseInitializer.java
