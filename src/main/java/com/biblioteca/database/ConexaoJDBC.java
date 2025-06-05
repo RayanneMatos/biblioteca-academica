@@ -1,8 +1,6 @@
 package com.biblioteca.database;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class ConexaoJDBC {
 
@@ -24,14 +22,26 @@ public class ConexaoJDBC {
     }
 
     //Método para fechar a conexão com o banco
-    public static void closeConnection(Connection connection) {
-        if (connection != null) {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                System.out.println("Erro ao fechar conexão");
-                e.printStackTrace();
-            }
+    public static void closeConnection(Connection conn, PreparedStatement stmt, ResultSet rs) {
+        try {
+            if (rs != null && !rs.isClosed())
+                rs.close();
+        } catch (SQLException e) {
+            System.out.println("Erro ao fechar ResultSet");
+            e.printStackTrace();
+        }
+        try {
+            if (stmt != null && !stmt.isClosed()) stmt.close();
+        } catch (SQLException e) {
+            System.out.println("Erro ao fechar PreparedStatement");
+            e.printStackTrace();
+        }
+
+        try {
+            if (conn != null && !conn.isClosed()) conn.close();
+        } catch (SQLException e) {
+            System.out.println("Erro ao fechar Connection");
+            e.printStackTrace();
         }
     }
 }
