@@ -17,15 +17,14 @@ public abstract class Usuario {
     private final TipoUsuario tipo; //não poderá ser alterado durante todo o contexto de execução
 
     //Construtor Usuario
-    public Usuario(long id, String nome, String matricula, String cpf, boolean ativo, String email, Turno turno, TipoUsuario tipo) {
-        this.id = id;
+    public Usuario(String nome, String matricula, String cpf, String email, Turno turno, TipoUsuario tipo) {
         this.nome = nome;
         this.matricula = matricula;
         this.cpf = cpf;
-        this.ativo = ativo;
         this.email = email;
         this.turno = turno;
         this.tipo = tipo;
+        this.ativo = true;
     }
 
     // get e set ID
