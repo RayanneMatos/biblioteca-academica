@@ -11,7 +11,7 @@ public class Aluno extends Usuario {
 
 
     public Aluno(long id, String nome, String matricula, String cpf, boolean ativo, String email, Turno turno) {
-        super(id, nome, matricula, cpf, ativo, email, turno, TipoUsuario.ALUNO);
+        super(nome, matricula, cpf, email, turno, TipoUsuario.ALUNO);
     }
 
 }
