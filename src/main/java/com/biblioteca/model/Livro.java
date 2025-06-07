@@ -1,5 +1,7 @@
 package com.biblioteca.model;
 
+import com.biblioteca.enums.Status;
+
 public class Livro {
   
     //Classe responsável por gerenciar os atributos dos livros!
@@ -11,17 +13,16 @@ public class Livro {
     private int anoPublicacao;
     private String editora;
     private String isbn;
-    private boolean status;
+    private Status status;
 
     //Método construtor
-    public Livro (int id, String titulo, String autor, int anoPublicacao, String editora, String isbn, boolean status) {
-        this.id = id;
+    public Livro (String titulo, String autor, int anoPublicacao, String editora, String isbn, boolean status) {
         this.titulo = titulo;
         this.autor = autor;
         this.anoPublicacao = anoPublicacao;
         this.editora = editora;
         this.isbn = isbn;
-        this.status = status;
+        this.status = Status.DISPONIVEL;
     }
 
     //Métodos getters e setters
@@ -72,12 +73,10 @@ public class Livro {
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
-
-    public boolean isStatus() {
+    public Status getStatus() {
         return status;
     }
-
-    public void setStatus(boolean status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 }
