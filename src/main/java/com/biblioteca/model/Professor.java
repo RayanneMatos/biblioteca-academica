@@ -1,3 +1,4 @@
+// Professor.java
 package com.biblioteca.model;
 
 import com.biblioteca.enums.TipoUsuario;
@@ -12,7 +13,4 @@ public class Professor extends Usuario {
     public Professor(String nome, String matricula, String cpf, String email, Turno turno) {
         super(nome, matricula, cpf, email, turno, TipoUsuario.PROFESSOR);
     }
-
-    
-
 }

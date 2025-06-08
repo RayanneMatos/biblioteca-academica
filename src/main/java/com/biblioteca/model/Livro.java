@@ -7,7 +7,7 @@ public class Livro {
     //Classe responsável por gerenciar os atributos dos livros!
 
     //Atributos da classe
-    private int id;
+    private long id;
     private String titulo;
     private String autor;
     private int anoPublicacao;
@@ -16,21 +16,22 @@ public class Livro {
     private Status status;
 
     //Método construtor
-    public Livro (String titulo, String autor, int anoPublicacao, String editora, String isbn, boolean status) {
+    public Livro(String titulo, String autor, int anoPublicacao, String editora, String isbn, Status status) {
         this.titulo = titulo;
         this.autor = autor;
         this.anoPublicacao = anoPublicacao;
         this.editora = editora;
         this.isbn = isbn;
-        this.status = Status.DISPONIVEL;
+        this.status = status;
     }
 
+
     //Métodos getters e setters
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

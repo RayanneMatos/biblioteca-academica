@@ -14,16 +14,16 @@ public abstract class Usuario {
     private boolean ativo;
     private String email;
     private Turno turno;
-    private final TipoUsuario tipo; //não poderá ser alterado durante todo o contexto de execução
+    private final TipoUsuario tipoUsuario; //não poderá ser alterado durante todo o contexto de execução
 
     //Construtor Usuario
-    public Usuario(String nome, String matricula, String cpf, String email, Turno turno, TipoUsuario tipo) {
+    public Usuario(String nome, String matricula, String cpf, String email, Turno turno, TipoUsuario tipoUsuario) {
         this.nome = nome;
         this.matricula = matricula;
         this.cpf = cpf;
         this.email = email;
         this.turno = turno;
-        this.tipo = tipo;
+        this.tipoUsuario = tipoUsuario;
         this.ativo = true;
     }
 
@@ -85,7 +85,7 @@ public abstract class Usuario {
 
     // get Tipo de usuário
     // Sem set para não permitir que seja alterado o tipo do usuário após a criação
-    public TipoUsuario getTipo() {
-        return tipo;
+    public TipoUsuario getTipoUsuario() {
+        return tipoUsuario;
     }
 }
