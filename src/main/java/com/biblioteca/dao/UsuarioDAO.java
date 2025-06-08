@@ -97,8 +97,19 @@ public class UsuarioDAO {
         TipoUsuario tipo = TipoUsuario.valueOf(rs.getString("tipo").toUpperCase());
 
         Usuario usuario = (tipo == TipoUsuario.ALUNO)
-                ? new Aluno(rs.getString("nome"), rs.getString("matricula"), rs.getString("cpf"), rs.getString("email"), Turno.valueOf(rs.getString("turno")))
-                : new Professor(rs.getString("nome"), rs.getString("matricula"), rs.getString("cpf"), rs.getString("email"), Turno.valueOf(rs.getString("turno")));
+                ? new Aluno(
+                rs.getLong("id"),
+                rs.getString("nome"),
+                rs.getString("matricula"),
+                rs.getString("cpf"), rs.getString("email"),
+                Turno.valueOf(rs.getString("turno")))
+                : new Professor(
+                rs.getLong("id"),
+                rs.getString("nome"),
+                rs.getString("matricula"),
+                rs.getString("cpf"),
+                rs.getString("email"), 
+                Turno.valueOf(rs.getString("turno")));
 
         usuario.setId(rs.getLong("id"));
         usuario.setAtivo(rs.getBoolean("ativo"));

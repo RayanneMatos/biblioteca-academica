@@ -16,7 +16,8 @@ public class Livro {
     private Status status;
 
     //Método construtor
-    public Livro(String titulo, String autor, int anoPublicacao, String editora, String isbn, Status status) {
+    public Livro(long id, String titulo, String autor, int anoPublicacao, String editora, String isbn, Status status) {
+        this.id = id;
         this.titulo = titulo;
         this.autor = autor;
         this.anoPublicacao = anoPublicacao;
