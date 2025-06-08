@@ -10,6 +10,7 @@ public class Emprestimo {
     private Livro livro;
     private LocalDate dataEmprestimo;
     private LocalDate dataDevolucao;
+    private LocalDate dataDevolucaoPrevista;
     private boolean devolvido;
 
     //Método construtor da classe Emprestimo
@@ -17,6 +18,7 @@ public class Emprestimo {
         this.usuario = usuario;
         this.livro = livro;
         this.dataEmprestimo = LocalDate.now();
+        this.dataDevolucaoPrevista = this.dataEmprestimo.plusDays(15);
         this.devolvido = false;
     }
 
@@ -54,6 +56,14 @@ public class Emprestimo {
         this.dataEmprestimo = dataEmprestimo;
     }
 
+    public LocalDate getDataDevolucaoPrevista() {
+        return dataDevolucaoPrevista;
+    }
+
+    public void setDataDevolucaoPrevista(LocalDate dataDevolucaoPrevista) {
+        this.dataDevolucaoPrevista = dataDevolucaoPrevista;
+    }
+
     public LocalDate getDataDevolucao() {
         return dataDevolucao;
     }
@@ -69,6 +79,4 @@ public class Emprestimo {
     public void setDevolvido(boolean devolvido) {
         this.devolvido = devolvido;
     }
-
-
 }
