@@ -155,6 +155,7 @@ public class AlunoDAO {
     // Mapeia o ResultSet para objeto Aluno
     private Aluno mapearAluno(ResultSet rs) throws SQLException {
         Aluno aluno = new Aluno(
+            rs.getLong("id"),
             rs.getString("nome"),
             rs.getString("matricula"),
             rs.getString("cpf"),

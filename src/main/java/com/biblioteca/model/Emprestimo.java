@@ -1,11 +1,10 @@
 package com.biblioteca.model;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Emprestimo {
     //Atributos que definem a classe de um emprestimo
-    private Long id;
+    private long id;
     private Usuario usuario;
     private Livro livro;
     private LocalDate dataEmprestimo;
@@ -24,11 +23,11 @@ public class Emprestimo {
 
 
     //Métodos getters e setters para buscar o/ou alterar os atributos privados da classe
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
