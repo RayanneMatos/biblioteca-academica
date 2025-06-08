@@ -77,6 +77,7 @@ public class ConexaoJDBC {
                 "id_usuario BIGINT NOT NULL," +
                 "id_livro INT NOT NULL," +
                 "data_emprestimo DATE NOT NULL," +
+                "data_devolucao_prevista DATE NOT NULL," +
                 "data_devolucao DATE," +
                 "devolvido BOOLEAN NOT NULL," +
                 "FOREIGN KEY (id_usuario) REFERENCES usuario(id)," +
