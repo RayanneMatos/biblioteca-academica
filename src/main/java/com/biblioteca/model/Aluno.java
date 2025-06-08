@@ -10,7 +10,7 @@ public class Aluno extends Usuario {
     //Essa subclase irá construir um Usuario, passando todos os dados e definindo o tipo como ALUNO sem precisar setar manualmente depois
 
 
-    public Aluno(long id, String nome, String matricula, String cpf, boolean ativo, String email, Turno turno) {
+    public Aluno(String nome, String matricula, String cpf, String email, Turno turno) {
         super(nome, matricula, cpf, email, turno, TipoUsuario.ALUNO);
     }
 
