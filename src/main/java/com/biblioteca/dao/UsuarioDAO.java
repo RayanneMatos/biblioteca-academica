@@ -92,6 +92,30 @@ public class UsuarioDAO {
         return usuarios;
     }
 
+    //Método para buscar um usuário por nome
+    public List<Usuario> buscarPorNome(String nome) {
+        List<Usuario> usuarios = new ArrayList<>();
+        String sql = "SELECT * FROM usuario WHERE LOWER(nome) LIKE ?"; //Utilização do operador para ignorar letra maiuscula e minuscula
+
+
+        try (Connection conn = ConexaoJDBC.getConnection();
+             PreparedStatement stm = conn.prepareStatement(sql)) {
+
+            stm.setString(1, "%" + nome.toLowerCase() + "%"); //Realiza a transformação das palavras para minuscula
+            try (ResultSet rs = stm.executeQuery()) {
+                while (rs.next()) {
+                    usuarios.add(mapearUsuario(rs));
+                }
+                if (usuarios.isEmpty()) {
+                    System.out.println("Nenhum usuário encontrado com o nome: " + nome);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao buscar por nome " + nome + ":" + e.getMessage());
+        }
+        return usuarios;
+    }
+
     // Mapeamento de ResultSet para objeto Usuario
     private Usuario mapearUsuario(ResultSet rs) throws SQLException {
         TipoUsuario tipo = TipoUsuario.valueOf(rs.getString("tipo").toUpperCase());
