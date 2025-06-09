@@ -14,12 +14,7 @@ import com.biblioteca.model.Livro;
 
 public class LivroDAO {
 
-    /**
-     * Cadastra um novo livro no banco de dados.
-     * @param livro Objeto Livro contendo os dados a serem salvos.
-     * @return Mensagem indicando sucesso ou falha no cadastro.
-     * @throws SQLException Caso ocorra algum erro na operação com o banco.
-     */
+    //Método para registrar um novo livro
     public String cadastrarLivro(Livro livro) throws SQLException {
         String sql = "INSERT INTO livros (titulo, autor, ano_publicacao, editora, isbn, status) VALUES (?, ?, ?, ?, ?, ?)";
         
@@ -51,11 +46,8 @@ public class LivroDAO {
         }
     }
 
-    /**
-     * Lista todos os livros cadastrados no banco de dados.
-     * @return Lista de objetos Livro.
-     * @throws SQLException Caso ocorra erro na consulta.
-     */
+
+     //Método que Lista todos os livros cadastrados no banco de dados.
     public List<Livro> listarTodos() throws SQLException {
         List<Livro> livros = new ArrayList<>();
         String sql = "SELECT * FROM livros";
@@ -73,12 +65,8 @@ public class LivroDAO {
         return livros;
     }
 
-    /**
-     * Busca um livro pelo seu ID.
-     * @param id ID do livro.
-     * @return Objeto Livro encontrado ou null se não existir.
-     * @throws SQLException Caso ocorra erro na consulta.
-     */
+
+    //Método para buscar um livro pelo ID
     public Livro buscarPorId(long id) throws SQLException {
         String sql = "SELECT * FROM livros WHERE id = ?";
 
@@ -95,12 +83,30 @@ public class LivroDAO {
         return null;  // Caso não encontre nenhum livro com o ID informado
     }
 
-    /**
-     * Atualiza os dados de um livro já existente.
-     * @param livro Objeto Livro com os dados atualizados e ID válido.
-     * @return true se atualização foi realizada com sucesso, false caso contrário.
-     * @throws SQLException Caso ocorra erro na atualização.
-     */
+    //Método para buscar livro por nome
+    public String buscarPorNome(String nome) throws SQLException {
+        String sql = "SELECT * FROM livros WHERE LOWER(titulo) LIKE ?";  // Usando LIKE para busca parcial
+
+        try (Connection conn = ConexaoJDBC.getConnection();
+             PreparedStatement stm = conn.prepareStatement(sql)) {
+
+            stm.setString(1, "%" + nome.toLowerCase() + "%");
+            try (ResultSet rs = stm.executeQuery()) {
+                List<Livro> livros = new ArrayList<>();
+                while (rs.next()) {
+                    livros.add(mapearLivro(rs));
+                }
+
+                if (livros.isEmpty()) {
+                    return "Nenhum livro encontrado com o título: " + nome;
+                } else {
+                    return "Livros encontrados: " + livros.size();
+                }
+            }
+        }
+    }
+
+    //Método para atualizar os dados de um livro existente
     public boolean atualizarLivro(Livro livro) throws SQLException {
         String sql = "UPDATE livros SET titulo = ?, autor = ?, ano_publicacao = ?, editora = ?, isbn = ?, status = ? WHERE id = ?";
 
@@ -121,13 +127,8 @@ public class LivroDAO {
         }
     }
 
-    /**
-     * Atualiza somente o status de um livro.
-     * @param id ID do livro.
-     * @param status Novo status para o livro.
-     * @return true se a atualização foi feita, false caso contrário.
-     * @throws SQLException Caso ocorra erro na operação.
-     */
+
+    //Método que atualiza somente o status de um livro.
     public boolean alterarStatus(long id, Status status) throws SQLException {
         String sql = "UPDATE livros SET status = ? WHERE id = ?";
 
@@ -141,12 +142,8 @@ public class LivroDAO {
         }
     }
 
-    /**
-     * Remove um livro do banco pelo seu ID.
-     * @param id ID do livro a ser deletado.
-     * @return true se o livro foi deletado, false caso contrário.
-     * @throws SQLException Caso ocorra erro na exclusão.
-     */
+    //Método que remove um livro do banco pelo seu ID.
+
     public boolean deletarLivro(long id) throws SQLException {
         String sql = "DELETE FROM livros WHERE id = ?";
 
@@ -158,12 +155,9 @@ public class LivroDAO {
         }
     }
 
-    /**
-     * Método auxiliar que mapeia um registro do ResultSet para um objeto Livro.
-     * @param rs ResultSet da consulta.
-     * @return Objeto Livro com os dados do registro.
-     * @throws SQLException Caso haja erro no acesso aos dados.
-     */
+
+    //Método auxiliar que mapeia um registro do ResultSet para um objeto Livro.
+
     private Livro mapearLivro(ResultSet rs) throws SQLException {
         // Cria o objeto Livro com dados do banco, incluindo status convertido de String para enum
         return new Livro(
