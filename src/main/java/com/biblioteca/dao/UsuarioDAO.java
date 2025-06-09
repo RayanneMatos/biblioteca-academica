@@ -116,6 +116,50 @@ public class UsuarioDAO {
         return usuarios;
     }
 
+    //Método para criar uma lista de todos usuarios
+    public List<Usuario> listarTodos() {
+        return listarPorTipo(null);
+    }
+
+    //Método para cirar uma lista apenas de usuários cujo tipo é: Aluno
+    public List<Usuario> listarAlunos() {
+        return listarPorTipo(TipoUsuario.ALUNO);
+    }
+
+    //Método para cirar uma lista apenas de usuários cujo tipo é: Professor
+    public List<Usuario> listarProfessores() {
+        return listarPorTipo(TipoUsuario.PROFESSOR);
+    }
+
+    //Método que recebe o tipo de filtro e realiza a operação, retornando os dados com o filtro desejado (Todos, Alunos ou Professores)
+    private List<Usuario> listarPorTipo(TipoUsuario tipo) {
+        List<Usuario> usuarios = new ArrayList<>();
+        String sql = "SELECT * FROM usuario";
+        if (tipo != null) {
+            sql += " WHERE tipo = ?";
+        }
+        Connection conn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+
+        try {
+            conn = ConexaoJDBC.getConnection();
+            pst = conn.prepareStatement(sql);
+            if (tipo != null) {
+                pst.setString(1, tipo.name());
+            }
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                usuarios.add(mapearUsuario(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            ConexaoJDBC.closeConnection(conn, pst, rs);
+        }
+        return usuarios;
+    }
+
     // Mapeamento de ResultSet para objeto Usuario
     private Usuario mapearUsuario(ResultSet rs) throws SQLException {
         TipoUsuario tipo = TipoUsuario.valueOf(rs.getString("tipo").toUpperCase());
