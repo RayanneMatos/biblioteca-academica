@@ -1,12 +1,12 @@
 package com.biblioteca.dao;
 
-import com.biblioteca.database.ConexaoJDBC;
-import com.biblioteca.model.Bibliotecario;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import com.biblioteca.database.ConexaoJDBC;
+import com.biblioteca.model.Bibliotecario;
 
 public class BibliotecarioDAO {
 
@@ -55,7 +55,7 @@ public class BibliotecarioDAO {
                 return bibliotecario;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Erro ao logar: " + e.getMessage());
         } finally {
             ConexaoJDBC.closeConnection(conn, stm, rs);
         }

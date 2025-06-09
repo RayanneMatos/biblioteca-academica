@@ -16,20 +16,16 @@ import com.biblioteca.model.Professor;
 import com.biblioteca.model.Usuario;
 
 public class UsuarioDAO {
-    
-    // Conexão externa fornecida ao DAO (injeção de dependência)
-    private final Connection connection;
 
-    // Construtor com injeção da conexão
-    public UsuarioDAO(Connection connection) {
-        this.connection = connection;
+    public UsuarioDAO() {
     }
 
     // Cadastrar um novo usuário
-    public String cadastrarUsuario(Usuario usuario) {
+    public String cadastrarUsuario(Usuario usuario) throws SQLException {
         String sql = "INSERT INTO usuarios (nome, matricula, cpf, ativo, email, turno, tipo) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        try (PreparedStatement stm = this.connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection connection = ConexaoJDBC.getConnection();
+                PreparedStatement stm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             stm.setString(1, usuario.getNome());
             stm.setString(2, usuario.getMatricula());
@@ -58,13 +54,12 @@ public class UsuarioDAO {
         }
     }
 
-
     // Buscar usuário por matrícula
-    public Usuario buscarPorMatricula(String matricula) {
+    public Usuario buscarPorMatricula(String matricula) throws SQLException {
         String sql = "SELECT * FROM usuarios WHERE matricula = ?";
 
         try (Connection conn = ConexaoJDBC.getConnection();
-             PreparedStatement stm = conn.prepareStatement(sql)) {
+                PreparedStatement stm = conn.prepareStatement(sql)) {
 
             stm.setString(1, matricula);
             try (ResultSet rs = stm.executeQuery()) {
@@ -81,16 +76,16 @@ public class UsuarioDAO {
         return null;
     }
 
-    //Método para buscar um usuário por nome
+    // Método para buscar um usuário por nome
     public List<Usuario> buscarPorNome(String nome) {
         List<Usuario> usuarios = new ArrayList<>();
-        String sql = "SELECT * FROM usuario WHERE LOWER(nome) LIKE ?"; //Utilização do operador para ignorar letra maiuscula e minuscula
-
+        String sql = "SELECT * FROM usuario WHERE LOWER(nome) LIKE ?"; // Utilização do operador para ignorar letra
+                                                                       // maiuscula e minuscula
 
         try (Connection conn = ConexaoJDBC.getConnection();
-             PreparedStatement stm = conn.prepareStatement(sql)) {
+                PreparedStatement stm = conn.prepareStatement(sql)) {
 
-            stm.setString(1, "%" + nome.toLowerCase() + "%"); //Realiza a transformação das palavras para minuscula
+            stm.setString(1, "%" + nome.toLowerCase() + "%"); // Realiza a transformação das palavras para minuscula
             try (ResultSet rs = stm.executeQuery()) {
                 while (rs.next()) {
                     usuarios.add(mapearUsuario(rs));
@@ -105,23 +100,24 @@ public class UsuarioDAO {
         return usuarios;
     }
 
-    //Método para criar uma lista de todos usuarios
-    public List<Usuario> listarTodos() {
+    // Método para criar uma lista de todos usuarios
+    public List<Usuario> listarTodos() throws SQLException {
         return listarPorTipo(null);
     }
 
-    //Método para cirar uma lista apenas de usuários cujo tipo é: Aluno
-    public List<Usuario> listarAlunos() {
+    // Método para cirar uma lista apenas de usuários cujo tipo é: Aluno
+    public List<Usuario> listarAlunos() throws SQLException {
         return listarPorTipo(TipoUsuario.ALUNO);
     }
 
-    //Método para cirar uma lista apenas de usuários cujo tipo é: Professor
-    public List<Usuario> listarProfessores() {
+    // Método para cirar uma lista apenas de usuários cujo tipo é: Professor
+    public List<Usuario> listarProfessores() throws SQLException {
         return listarPorTipo(TipoUsuario.PROFESSOR);
     }
 
-    //Método que recebe o tipo de filtro e realiza a operação, retornando os dados com o filtro desejado (Todos, Alunos ou Professores)
-    private List<Usuario> listarPorTipo(TipoUsuario tipo) {
+    // Método que recebe o tipo de filtro e realiza a operação, retornando os dados
+    // com o filtro desejado (Todos, Alunos ou Professores)
+    private List<Usuario> listarPorTipo(TipoUsuario tipo) throws SQLException {
         List<Usuario> usuarios = new ArrayList<>();
         String sql = "SELECT * FROM usuario";
         if (tipo != null) {
@@ -149,21 +145,20 @@ public class UsuarioDAO {
         return usuarios;
     }
 
-        // Deletar usuário pelo id
-        public void deletar(long id) {
-            String sql = "DELETE FROM usuarios WHERE id = ?";
-    
-            try (Connection conn = ConexaoJDBC.getConnection();
-                 PreparedStatement pst = conn.prepareStatement(sql)) {
-    
-                pst.setLong(1, id);
-                pst.executeUpdate();
-    
-            } catch (SQLException e) {
-                System.err.println("Erro ao excluir usuário: " + e.getMessage());
-            }
+    // Deletar usuário pelo id
+    public void deletar(long id) {
+        String sql = "DELETE FROM usuarios WHERE id = ?";
+
+        try (Connection conn = ConexaoJDBC.getConnection();
+                PreparedStatement pst = conn.prepareStatement(sql)) {
+
+            pst.setLong(1, id);
+            pst.executeUpdate();
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao excluir usuário: " + e.getMessage());
         }
-    
+    }
 
     // Mapeamento de ResultSet para objeto Usuario
     private Usuario mapearUsuario(ResultSet rs) throws SQLException {
@@ -171,18 +166,18 @@ public class UsuarioDAO {
 
         Usuario usuario = (tipo == TipoUsuario.ALUNO)
                 ? new Aluno(
-                rs.getLong("id"),
-                rs.getString("nome"),
-                rs.getString("matricula"),
-                rs.getString("cpf"), rs.getString("email"),
-                Turno.valueOf(rs.getString("turno")))
+                        rs.getLong("id"),
+                        rs.getString("nome"),
+                        rs.getString("matricula"),
+                        rs.getString("cpf"), rs.getString("email"),
+                        Turno.valueOf(rs.getString("turno")))
                 : new Professor(
-                rs.getLong("id"),
-                rs.getString("nome"),
-                rs.getString("matricula"),
-                rs.getString("cpf"),
-                rs.getString("email"), 
-                Turno.valueOf(rs.getString("turno")));
+                        rs.getLong("id"),
+                        rs.getString("nome"),
+                        rs.getString("matricula"),
+                        rs.getString("cpf"),
+                        rs.getString("email"),
+                        Turno.valueOf(rs.getString("turno")));
 
         usuario.setId(rs.getLong("id"));
         usuario.setAtivo(rs.getBoolean("ativo"));

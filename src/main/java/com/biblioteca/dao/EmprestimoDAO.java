@@ -90,9 +90,8 @@ public class EmprestimoDAO {
                     String tipoUsuario = rs.getString("tipo_usuario"); // Exemplo: "ALUNO", "PROFESSOR"
                     Turno turno = Turno.valueOf(rs.getString("turno")); // Enum
 
-                    switch (tipoUsuario) {
-                        case "ALUNO":
-                            return new Aluno(
+                    return switch (tipoUsuario) {
+                        case "ALUNO" -> new Aluno(
                                 rs.getLong("id"),
                                 rs.getString("nome"),
                                 rs.getString("matricula"),
@@ -100,8 +99,7 @@ public class EmprestimoDAO {
                                 rs.getString("email"),
                                 turno
                             );
-                        case "PROFESSOR":
-                            return new Professor(
+                        case "PROFESSOR" -> new Professor(
                                 rs.getLong("id"),
                                 rs.getString("nome"),
                                 rs.getString("matricula"),
@@ -109,9 +107,8 @@ public class EmprestimoDAO {
                                 rs.getString("email"),
                                 turno
                             );
-                        default:
-                            throw new IllegalArgumentException("Tipo de usuário desconhecido: " + tipoUsuario);
-                    }
+                        default -> throw new IllegalArgumentException("Tipo de usuário desconhecido: " + tipoUsuario);
+                    };
                 }
             }
         }
