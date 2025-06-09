@@ -72,26 +72,6 @@ public class UsuarioDAO {
         return null;
     }
 
-    // Listar todos os usuários
-    public List<Usuario> listarUsuarios() {
-        List<Usuario> usuarios = new ArrayList<>();
-        String sql = "SELECT * FROM usuarios";
-
-        try (Connection conn = ConexaoJDBC.getConnection();
-             PreparedStatement stm = conn.prepareStatement(sql);
-             ResultSet rs = stm.executeQuery()) {
-
-            while (rs.next()) {
-                usuarios.add(mapearUsuario(rs));
-            }
-
-        } catch (SQLException e) {
-            System.err.println("Erro ao listar usuários: " + e.getMessage());
-        }
-
-        return usuarios;
-    }
-
     //Método para buscar um usuário por nome
     public List<Usuario> buscarPorNome(String nome) {
         List<Usuario> usuarios = new ArrayList<>();
