@@ -127,13 +127,8 @@ public class LivroDAO {
         }
     }
 
-    /**
-     * Atualiza somente o status de um livro.
-     * @param id ID do livro.
-     * @param status Novo status para o livro.
-     * @return true se a atualização foi feita, false caso contrário.
-     * @throws SQLException Caso ocorra erro na operação.
-     */
+
+    //Método que atualiza somente o status de um livro.
     public boolean alterarStatus(long id, Status status) throws SQLException {
         String sql = "UPDATE livros SET status = ? WHERE id = ?";
 
@@ -147,12 +142,8 @@ public class LivroDAO {
         }
     }
 
-    /**
-     * Remove um livro do banco pelo seu ID.
-     * @param id ID do livro a ser deletado.
-     * @return true se o livro foi deletado, false caso contrário.
-     * @throws SQLException Caso ocorra erro na exclusão.
-     */
+    //Método que remove um livro do banco pelo seu ID.
+
     public boolean deletarLivro(long id) throws SQLException {
         String sql = "DELETE FROM livros WHERE id = ?";
 
@@ -164,12 +155,9 @@ public class LivroDAO {
         }
     }
 
-    /**
-     * Método auxiliar que mapeia um registro do ResultSet para um objeto Livro.
-     * @param rs ResultSet da consulta.
-     * @return Objeto Livro com os dados do registro.
-     * @throws SQLException Caso haja erro no acesso aos dados.
-     */
+
+    //Método auxiliar que mapeia um registro do ResultSet para um objeto Livro.
+
     private Livro mapearLivro(ResultSet rs) throws SQLException {
         // Cria o objeto Livro com dados do banco, incluindo status convertido de String para enum
         return new Livro(
