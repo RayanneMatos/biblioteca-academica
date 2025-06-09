@@ -140,6 +140,22 @@ public class UsuarioDAO {
         return usuarios;
     }
 
+        // Deletar usuário
+        public void deletar(int id) {
+            String sql = "DELETE FROM usuarios WHERE id = ?";
+    
+            try (Connection conn = ConexaoJDBC.getConnection();
+                 PreparedStatement pst = conn.prepareStatement(sql)) {
+    
+                pst.setInt(1, id);
+                pst.executeUpdate();
+    
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    
+
     // Mapeamento de ResultSet para objeto Usuario
     private Usuario mapearUsuario(ResultSet rs) throws SQLException {
         TipoUsuario tipo = TipoUsuario.valueOf(rs.getString("tipo").toUpperCase());
