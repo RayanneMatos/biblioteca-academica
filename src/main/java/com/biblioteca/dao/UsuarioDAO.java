@@ -16,13 +16,20 @@ import com.biblioteca.model.Professor;
 import com.biblioteca.model.Usuario;
 
 public class UsuarioDAO {
+    
+    // Conexão externa fornecida ao DAO (injeção de dependência)
+    private final Connection connection;
+
+    // Construtor com injeção da conexão
+    public UsuarioDAO(Connection connection) {
+        this.connection = connection;
+    }
 
     // Cadastrar um novo usuário
     public String cadastrarUsuario(Usuario usuario) {
         String sql = "INSERT INTO usuarios (nome, matricula, cpf, ativo, email, turno, tipo) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection conn = ConexaoJDBC.getConnection();
-             PreparedStatement stm = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement stm = this.connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             stm.setString(1, usuario.getNome());
             stm.setString(2, usuario.getMatricula());
@@ -33,6 +40,7 @@ public class UsuarioDAO {
             stm.setString(7, usuario.getTipoUsuario().name());
 
             int rowsAffected = stm.executeUpdate();
+
             if (rowsAffected > 0) {
                 try (ResultSet rs = stm.getGeneratedKeys()) {
                     if (rs.next()) {
@@ -49,6 +57,7 @@ public class UsuarioDAO {
             return "Erro ao cadastrar usuário: " + e.getMessage();
         }
     }
+
 
     // Buscar usuário por matrícula
     public Usuario buscarPorMatricula(String matricula) {
@@ -133,25 +142,25 @@ public class UsuarioDAO {
                 usuarios.add(mapearUsuario(rs));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Erro ao listar usuário: " + e.getMessage());
         } finally {
             ConexaoJDBC.closeConnection(conn, pst, rs);
         }
         return usuarios;
     }
 
-        // Deletar usuário
-        public void deletar(int id) {
+        // Deletar usuário pelo id
+        public void deletar(long id) {
             String sql = "DELETE FROM usuarios WHERE id = ?";
     
             try (Connection conn = ConexaoJDBC.getConnection();
                  PreparedStatement pst = conn.prepareStatement(sql)) {
     
-                pst.setInt(1, id);
+                pst.setLong(1, id);
                 pst.executeUpdate();
     
             } catch (SQLException e) {
-                e.printStackTrace();
+                System.err.println("Erro ao excluir usuário: " + e.getMessage());
             }
         }
     
