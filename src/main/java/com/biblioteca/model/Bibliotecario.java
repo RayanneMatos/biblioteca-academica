@@ -14,8 +14,7 @@ public class Bibliotecario {
 
 
     //Método construtor
-    public Bibliotecario(Long id, String nome, String cpf, String email, String senha) {
-        this.id = id;
+    public Bibliotecario(String nome, String cpf, String email, String senha) {
         this.nome = nome;
         this.cpf = cpf;
         this.email = email;
