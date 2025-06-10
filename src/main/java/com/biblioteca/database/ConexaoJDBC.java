@@ -1,11 +1,16 @@
 package com.biblioteca.database;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class ConexaoJDBC {
 
     //Informações para o caminho, usuário e senha para rastramento de conexão
-    private static final String URL = "jdbc:h2:~/test";  // Banco H2 local (arquivo "test" na sua home)
+    private static final String URL = "jdbc:h2:~/biblioteca-academica";  // Banco H2 local (arquivo "test" na sua home)
     private static final String USUARIO = "sa";          // Usuário padrão do H2
     private static final String SENHA = "";              // Senha padrão do H2 é vazia
 

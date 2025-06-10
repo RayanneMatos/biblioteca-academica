@@ -16,7 +16,7 @@ public class Main {
     public static void main(String[] args) {
         com.biblioteca.database.DatabaseInitializer.initializeDatabase();
         DatabaseInitializer.mostrarUsuarios();
-        
+
         try (Scanner scanner = new Scanner(System.in)) {
             boolean sair = false;
 
@@ -120,7 +120,7 @@ public class Main {
                     } else {
                         System.out.println("Usuário não encontrado.");
                     }
-                    }       
+                }       
 
                     case 3 -> {
                         System.out.print("Digite o nome: ");
