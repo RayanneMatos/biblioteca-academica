@@ -164,21 +164,34 @@ public class UsuarioDAO {
     private Usuario mapearUsuario(ResultSet rs) throws SQLException {
         TipoUsuario tipo = TipoUsuario.valueOf(rs.getString("tipo").toUpperCase());
 
+        // Captura a string do turno vindo do banco e converte para maiúsculo
+        String turnoStr = rs.getString("turno").toUpperCase();
+        Turno turno;
+        try {
+            turno = Turno.valueOf(turnoStr);
+        } catch (IllegalArgumentException e) {
+            // Se o valor não for válido, define um padrão
+            turno = Turno.MATUTINO;
+            System.err.println("Turno inválido no banco: " + turnoStr + ". Usando MATUTINO como padrão.");
+        }
+
         Usuario usuario = (tipo == TipoUsuario.ALUNO)
                 ? new Aluno(
                         rs.getString("nome"),
                         rs.getString("matricula"),
-                        rs.getString("cpf"), rs.getString("email"),
-                        Turno.valueOf(rs.getString("turno")))
+                        rs.getString("cpf"),
+                        rs.getString("email"),
+                        turno)
                 : new Professor(
                         rs.getString("nome"),
                         rs.getString("matricula"),
                         rs.getString("cpf"),
                         rs.getString("email"),
-                        Turno.valueOf(rs.getString("turno")));
+                        turno);
 
         usuario.setId(rs.getLong("id"));
         usuario.setAtivo(rs.getBoolean("ativo"));
         return usuario;
     }
+
 }
