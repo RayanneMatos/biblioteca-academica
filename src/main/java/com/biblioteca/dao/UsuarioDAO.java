@@ -166,13 +166,11 @@ public class UsuarioDAO {
 
         Usuario usuario = (tipo == TipoUsuario.ALUNO)
                 ? new Aluno(
-                        rs.getLong("id"),
                         rs.getString("nome"),
                         rs.getString("matricula"),
                         rs.getString("cpf"), rs.getString("email"),
                         Turno.valueOf(rs.getString("turno")))
                 : new Professor(
-                        rs.getLong("id"),
                         rs.getString("nome"),
                         rs.getString("matricula"),
                         rs.getString("cpf"),

@@ -92,7 +92,6 @@ public class EmprestimoDAO {
 
                     return switch (tipoUsuario) {
                         case "ALUNO" -> new Aluno(
-                                rs.getLong("id"),
                                 rs.getString("nome"),
                                 rs.getString("matricula"),
                                 rs.getString("cpf"),
@@ -100,7 +99,6 @@ public class EmprestimoDAO {
                                 turno
                             );
                         case "PROFESSOR" -> new Professor(
-                                rs.getLong("id"),
                                 rs.getString("nome"),
                                 rs.getString("matricula"),
                                 rs.getString("cpf"),
