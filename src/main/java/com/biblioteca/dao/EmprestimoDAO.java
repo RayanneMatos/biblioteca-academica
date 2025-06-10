@@ -123,7 +123,6 @@ public class EmprestimoDAO {
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     return new Livro(
-                        rs.getLong("id"),
                         rs.getString("titulo"),
                         rs.getString("autor"),
                         rs.getInt("ano_publicacao"),

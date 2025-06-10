@@ -161,7 +161,6 @@ public class LivroDAO {
     private Livro mapearLivro(ResultSet rs) throws SQLException {
         // Cria o objeto Livro com dados do banco, incluindo status convertido de String para enum
         return new Livro(
-                rs.getLong("id"),
                 rs.getString("titulo"),
                 rs.getString("autor"),
                 rs.getInt("ano_publicacao"),
