@@ -11,16 +11,16 @@ public class LivroService {
 
     private final LivroDAO livroDAO;
 
-    // Construtor que inicializa o DAO de livro, lançando SQLException se houver erro na conexão
-    public LivroService() throws SQLException {
+    // Construtor que inicializa o DAO de livro
+    public LivroService() {
         this.livroDAO = new LivroDAO();
     }
 
-    //Cadastra um novo livro no banco de dados
+    // Cadastra um novo livro no banco de dados
     public String cadastrarLivro(Livro livro) {
         // Validação básica dos campos obrigatórios
         if (livro == null || livro.getTitulo() == null || livro.getAutor() == null ||
-            livro.getEditora() == null || livro.getIsbn() == null || livro.getStatus() == null) {
+                livro.getEditora() == null || livro.getIsbn() == null || livro.getStatus() == null) {
             return "Todos os campos do livro são obrigatórios.";
         }
 
@@ -31,7 +31,7 @@ public class LivroService {
         }
     }
 
-     //Lista todos os livros cadastrados no sistema
+    // Lista todos os livros cadastrados no sistema
     public List<Livro> listarTodosLivros() {
         try {
             return livroDAO.listarTodos();
@@ -41,7 +41,7 @@ public class LivroService {
         }
     }
 
-        //Busca um livro pelo ID
+    // Busca um livro pelo ID
     public Livro buscarLivroPorId(long id) {
         try {
             return livroDAO.buscarPorId(id);
@@ -51,7 +51,7 @@ public class LivroService {
         }
     }
 
-    //Busca livros pelo nome (parcial ou completo)
+    // Busca livros pelo nome (parcial ou completo)
     public String buscarLivroPorNome(String nome) {
         if (nome == null || nome.isBlank()) {
             return "O nome do livro não pode estar vazio.";
@@ -65,7 +65,7 @@ public class LivroService {
     }
 
     public String atualizarLivro(Livro livro) {
-         // Validação do parâmetro
+        // Validação do parâmetro
         if (livro == null || livro.getId() == 0) {
             return "Livro inválido para atualização.";
         }
@@ -78,7 +78,7 @@ public class LivroService {
         }
     }
 
-    //Altera o status de um livro (DISPONIVEL, EMPRESTADO, etc)
+    // Altera o status de um livro (DISPONIVEL, EMPRESTADO, etc)
     public String alterarStatusLivro(long id, Status status) {
         try {
             boolean alterado = livroDAO.alterarStatus(id, status);
@@ -88,7 +88,7 @@ public class LivroService {
         }
     }
 
-    //Remove um livro do banco de dados
+    // Remove um livro do banco de dados
     public String deletarLivro(long id) {
         try {
             boolean deletado = livroDAO.deletarLivro(id);

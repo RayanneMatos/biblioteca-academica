@@ -11,20 +11,20 @@ public class EmprestimoService {
 
     private final EmprestimoDAO emprestimoDAO;
 
-    // Construtor que inicializa o DAO de empréstimo, lançando SQLException se houver erro na conexão
+    // Construtor que inicializa o DAO de empréstimo
 
-    public EmprestimoService() throws SQLException {
+    public EmprestimoService() {
         this.emprestimoDAO = new EmprestimoDAO();
     }
 
     // Método para salvar um novo empréstimo
     public String salvarEmprestimo(Emprestimo emprestimo) {
         try {
-             // Valida se o empréstimo possui usuário e livro associados
+            // Valida se o empréstimo possui usuário e livro associados
             if (emprestimo.getUsuario() == null || emprestimo.getLivro() == null) {
                 return "Usuário e livro são obrigatórios para o empréstimo.";
             }
-             // Salva o empréstimo no banco usando o DAO
+            // Salva o empréstimo no banco usando o DAO
             emprestimoDAO.realizarEmprestimo(emprestimo);
             return "Empréstimo salvo com sucesso!";
         } catch (SQLException e) {
@@ -33,8 +33,8 @@ public class EmprestimoService {
         }
     }
 
-    //Método para devolver livro
-    public String devolverLivro(int livroId) {
+    // Método para devolver livro
+    public String devolverLivro(long livroId) {
         try {
             emprestimoDAO.devolverPorIdDoLivro(livroId);
             return "Devolução processada com sucesso para o livro ID: " + livroId;
@@ -50,7 +50,7 @@ public class EmprestimoService {
             return emprestimoDAO.listarAtivos();
         } catch (SQLException e) {
             System.err.println("Erro ao listar empréstimos ativos: " + e.getMessage());
-            return Collections.emptyList(); //Retorna uma lista vazia
+            return Collections.emptyList(); // Retorna uma lista vazia
         }
     }
 

@@ -2,18 +2,17 @@ package com.biblioteca.model;
 
 public class Bibliotecario {
 
-    //Classe responsável pelo gerenciamento do sistema, como emprestimo/devolução de livros, criação de novos usuarios e livros.
+    // Classe responsável pelo gerenciamento do sistema, como emprestimo/devolução
+    // de livros, criação de novos usuarios e livros.
 
-
-    //Atributos da classe
+    // Atributos da classe
     private Long id;
     private String nome;
     private String cpf;
     private String email;
-    private String senha; //Testar lógica para solicitar senha na hora de relizar o empréstimo
+    private String senha; // Testar lógica para solicitar senha na hora de relizar o empréstimo
 
-
-    //Método construtor
+    // Método construtor
     public Bibliotecario(String nome, String cpf, String email, String senha) {
         this.nome = nome;
         this.cpf = cpf;
@@ -21,8 +20,7 @@ public class Bibliotecario {
         this.senha = senha;
     }
 
-
-    //Métodos getters e setters
+    // Métodos getters e setters
     public Long getId() {
         return id;
     }
@@ -61,5 +59,9 @@ public class Bibliotecario {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public String toString() {
+        return "Bibliotecario: " + this.nome + " - " + this.cpf + " - " + this.email;
     }
 }

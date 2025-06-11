@@ -3,10 +3,10 @@ package com.biblioteca.model;
 import com.biblioteca.enums.Status;
 
 public class Livro {
-  
-    //Classe responsável por gerenciar os atributos dos livros!
 
-    //Atributos da classe
+    // Classe responsável por gerenciar os atributos dos livros!
+
+    // Atributos da classe
     private long id;
     private String titulo;
     private String autor;
@@ -15,7 +15,7 @@ public class Livro {
     private String isbn;
     private Status status;
 
-    //Método construtor
+    // Método construtor
     public Livro(String titulo, String autor, int anoPublicacao, String editora, String isbn, Status status) {
         this.titulo = titulo;
         this.autor = autor;
@@ -25,8 +25,7 @@ public class Livro {
         this.status = status;
     }
 
-
-    //Métodos getters e setters
+    // Métodos getters e setters
     public long getId() {
         return id;
     }
@@ -74,10 +73,23 @@ public class Livro {
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
+
     public Status getStatus() {
         return status;
     }
+
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+
+        return "\nTítulo: " + titulo +
+                "Autor: " + autor +
+                "Ano de Publicação: " + anoPublicacao +
+                "Editora: " + editora +
+                "ISBN: " + isbn +
+                "Status: " + status;
     }
 }

@@ -10,8 +10,8 @@ public class UsuarioService {
 
     private final UsuarioDAO usuarioDAO;
 
-    // Construtor que inicializa o DAO de usuario, lançando SQLException se houver erro na conexão
-    public UsuarioService() throws SQLException {
+    // Construtor que inicializa o DAO de usuario
+    public UsuarioService() {
         this.usuarioDAO = new UsuarioDAO();
     }
 

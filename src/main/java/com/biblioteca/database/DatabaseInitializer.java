@@ -14,31 +14,10 @@ public class DatabaseInitializer {
 
     public static void initializeDatabase() {
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-             Statement stmt = connection.createStatement()) {
-
-            String createTableUsuarios = """
-                CREATE TABLE IF NOT EXISTS usuarios (
-                    id IDENTITY PRIMARY KEY,
-                    nome VARCHAR(255),
-                    matricula VARCHAR(50),
-                    cpf VARCHAR(20),
-                    ativo BOOLEAN,
-                    email VARCHAR(255),
-                    turno VARCHAR(20),
-                    tipo VARCHAR(20)
-                );
-            """;
-            stmt.execute(createTableUsuarios);
-
-            // Insere um usuário fictício se a tabela estiver vazia
-            ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM usuarios");
-            rs.next();
-            if (rs.getInt(1) == 0) {
-                stmt.executeUpdate("""
-                    INSERT INTO usuarios (nome, matricula, cpf, ativo, email, turno, tipo)
-                    VALUES ('João da Silva', '12345', '000.000.000-00', TRUE, 'joao@email.com', 'Matutino', 'Aluno');
-                """);
-            }
+                Statement stmt = connection.createStatement()) {
+            criarTabelaUsuario(stmt);
+            criarTabelaLivros(stmt);
+            criarTabelaEmprestimo(stmt);
 
             System.out.println("✔️ Banco inicializado com sucesso!");
 
@@ -47,23 +26,63 @@ public class DatabaseInitializer {
         }
     }
 
-    public static void mostrarUsuarios() {
-        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-             Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM usuarios")) {
+    private static void criarTabelaUsuario(Statement stmt) throws SQLException {
+        // Exclui a tabela se existir
+        String dropTableUsuarios = "DROP TABLE IF EXISTS usuarios";
+        stmt.execute(dropTableUsuarios);
 
-            System.out.println("\n📋 Lista de usuários:");
-
-            while (rs.next()) {
-                System.out.printf("ID: %d | Nome: %s | Matrícula: %s | Ativo: %b\n",
-                        rs.getInt("id"),
-                        rs.getString("nome"),
-                        rs.getString("matricula"),
-                        rs.getBoolean("ativo"));
-            }
-
-        } catch (SQLException e) {
-            System.err.println("❌ Erro ao consultar usuários: " + e.getMessage());
-        }
+        String createTableUsuarios = """
+                    CREATE TABLE IF NOT EXISTS usuarios (
+                        id IDENTITY PRIMARY KEY,
+                        nome VARCHAR(255),
+                        matricula VARCHAR(50),
+                        cpf VARCHAR(20),
+                        ativo BOOLEAN,
+                        email VARCHAR(255),
+                        turno VARCHAR(20),
+                        tipo VARCHAR(20)
+                    );
+                """;
+        stmt.execute(createTableUsuarios);
     }
+
+    private static void criarTabelaLivros(Statement stmt) throws SQLException {
+        // Exclui a tabela se existir
+        String dropTableLivros = "DROP TABLE IF EXISTS livros";
+        stmt.execute(dropTableLivros);
+
+        String createTableLivros = """
+                    CREATE TABLE IF NOT EXISTS livros (
+                        id IDENTITY PRIMARY KEY,
+                        titulo VARCHAR(255),
+                        autor VARCHAR(255),
+                        ano_publicacao INT,
+                        editora VARCHAR(255),
+                        status VARCHAR(20)
+                    );
+                """;
+        stmt.execute(createTableLivros);
+    }
+
+    public static void criarTabelaEmprestimo(Statement stmt) throws SQLException {
+        // Exclui a tabela se existir
+        String dropTableEmprestimo = "DROP TABLE IF EXISTS emprestimo";
+        stmt.execute(dropTableEmprestimo);
+
+        String createTableEmprestimo = """
+                    CREATE TABLE IF NOT EXISTS emprestimo (
+                        id IDENTITY PRIMARY KEY,
+                        id_usuario INT,
+                        id_livro INT,
+                        data_emprestimo DATE,
+                        data_devolucao_prevista DATE,
+                        data_devolucao_real DATE,
+                        devolvido BOOLEAN,
+                        FOREIGN KEY (id_usuario) REFERENCES usuarios(id),
+                        FOREIGN KEY (id_livro) REFERENCES livros(id)
+                    );
+                """;
+        stmt.execute(createTableEmprestimo);
+    }
+
 }

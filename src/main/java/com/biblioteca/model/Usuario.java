@@ -3,20 +3,20 @@ package com.biblioteca.model;
 import com.biblioteca.enums.TipoUsuario;
 import com.biblioteca.enums.Turno;
 
-
 /*Requisitos:
 Cadastro de usuários: nome, matrícula, tipo (aluno ou professor), CPF e e-mail*/
 public abstract class Usuario {
-    private long id; //long para garantir a capacidade de persistência no banco de dados, visando a longo prazo
+    private long id; // long para garantir a capacidade de persistência no banco de dados, visando a
+                     // longo prazo
     private String nome;
     private String matricula;
     private String cpf;
     private boolean ativo;
     private String email;
     private Turno turno;
-    private final TipoUsuario tipoUsuario; //não poderá ser alterado durante todo o contexto de execução
+    private final TipoUsuario tipoUsuario; // não poderá ser alterado durante todo o contexto de execução
 
-    //Construtor Usuario
+    // Construtor Usuario
     public Usuario(String nome, String matricula, String cpf, String email, Turno turno, TipoUsuario tipoUsuario) {
         this.nome = nome;
         this.matricula = matricula;
@@ -31,6 +31,7 @@ public abstract class Usuario {
     public long getId() {
         return id;
     }
+
     public void setId(long id) {
         this.id = id;
     }
@@ -39,6 +40,7 @@ public abstract class Usuario {
     public String getNome() {
         return nome;
     }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -47,6 +49,7 @@ public abstract class Usuario {
     public String getMatricula() {
         return matricula;
     }
+
     public void setMatricula(String matricula) {
         this.matricula = matricula;
     }
@@ -55,6 +58,7 @@ public abstract class Usuario {
     public String getCpf() {
         return cpf;
     }
+
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
@@ -63,6 +67,7 @@ public abstract class Usuario {
     public Turno getTurno() {
         return turno;
     }
+
     public void setTurno(Turno turno) {
         this.turno = turno;
     }
@@ -71,6 +76,7 @@ public abstract class Usuario {
     public String getEmail() {
         return email;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -79,6 +85,7 @@ public abstract class Usuario {
     public boolean isAtivo() {
         return ativo;
     }
+
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
     }
@@ -87,5 +94,16 @@ public abstract class Usuario {
     // Sem set para não permitir que seja alterado o tipo do usuário após a criação
     public TipoUsuario getTipoUsuario() {
         return tipoUsuario;
+    }
+
+    @Override
+    public String toString() {
+        return "\nNome: " + this.nome + "\n" +
+                "Matrícula: " + this.matricula + "\n" +
+                "CPF: " + this.cpf + "\n" +
+                "E-mail: " + this.email + "\n" +
+                "Turno: " + this.turno + "\n" +
+                "Tipo de usuário: " + this.tipoUsuario + "\n" +
+                "Status: " + (this.ativo ? "Ativo" : "Inativo") + "\n";
     }
 }

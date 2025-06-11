@@ -119,7 +119,7 @@ public class UsuarioDAO {
     // com o filtro desejado (Todos, Alunos ou Professores)
     private List<Usuario> listarPorTipo(TipoUsuario tipo) throws SQLException {
         List<Usuario> usuarios = new ArrayList<>();
-        String sql = "SELECT * FROM usuario";
+        String sql = "SELECT * FROM usuarios";
         if (tipo != null) {
             sql += " WHERE tipo = ?";
         }

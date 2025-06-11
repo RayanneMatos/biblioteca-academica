@@ -3,7 +3,7 @@ package com.biblioteca.model;
 import java.time.LocalDate;
 
 public class Emprestimo {
-    //Atributos que definem a classe de um emprestimo
+    // Atributos que definem a classe de um emprestimo
     private long id;
     private Usuario usuario;
     private Livro livro;
@@ -12,7 +12,7 @@ public class Emprestimo {
     private LocalDate dataDevolucaoPrevista;
     private boolean devolvido;
 
-    //Método construtor da classe Emprestimo
+    // Método construtor da classe Emprestimo
     public Emprestimo(Usuario usuario, Livro livro) {
         this.usuario = usuario;
         this.livro = livro;
@@ -21,8 +21,8 @@ public class Emprestimo {
         this.devolvido = false;
     }
 
-
-    //Métodos getters e setters para buscar o/ou alterar os atributos privados da classe
+    // Métodos getters e setters para buscar o/ou alterar os atributos privados da
+    // classe
     public long getId() {
         return id;
     }
@@ -77,5 +77,14 @@ public class Emprestimo {
 
     public void setDevolvido(boolean devolvido) {
         this.devolvido = devolvido;
+    }
+
+    @Override
+    public String toString() {
+        return "\nUsuário: " + usuario
+                + "\nLivro: " + livro
+                + "\nData de empréstimo: " + dataEmprestimo
+                + "\nData de devolução prevista: " + dataDevolucaoPrevista
+                + "\nDevolvido: " + devolvido;
     }
 }
